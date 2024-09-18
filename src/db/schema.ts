@@ -1,5 +1,5 @@
 import { createId } from "@paralleldrive/cuid2";
-import { pgTable, text, varchar, jsonb, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
 
 export const profile = pgTable('profile', {
     id: text('id').primaryKey().$defaultFn(() => createId()), //PK
@@ -9,6 +9,7 @@ export const profile = pgTable('profile', {
     goals: text('goals').notNull(),
     linkedIn: text('linkedin').notNull(),
     github: text('github').notNull(),
+    langugage: varchar('language', {enum: ['en-us', 'pt-br']}).notNull()
 })
 
 export const extraInfo = pgTable('extra_info', {
@@ -66,6 +67,7 @@ export const certificate = pgTable('certificate', {
 
 export const certificateTech = pgTable('certificate_tech', { //Certificate/Tech auxiliary table
     id: text('id').primaryKey().$defaultFn(() => createId()), //PK
+    title: text('text').notNull(),
     techId: text('tech_id').references(() => tech.id),
     certificateId: text('certificate_id').references(() => certificate.credentials)
 }) 
