@@ -19,7 +19,7 @@ export async function getAbout(){
         }).from(profile)
         .innerJoin(tech, eq(tech.profileId, profile.id))
         .groupBy(profile.bio, profile.goals)
-        .where(eq(profile.id, 'v5f2j45n8s1x64n5p4jv73gp'))
+        .where(eq(profile.id, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
         about: result[0]

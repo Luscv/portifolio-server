@@ -17,7 +17,7 @@ export async function getCarrer(){
             icon: carrer.icon,
             carrerSection: carrer.carrerSection
         }).from(carrer)
-        .where(eq(carrer.profileId, 'v5f2j45n8s1x64n5p4jv73gp'))
+        .where(eq(carrer.profileId, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
         carrer: result

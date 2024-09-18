@@ -61,13 +61,15 @@ export const projectTech = pgTable('project_tech', { //Project/Tech auxiliary ta
 export const certificate = pgTable('certificate', {
     credentials: text('id').primaryKey().notNull(), //PK
     profileId: text('profile_id').references(() => profile.id), //FK
+    title: text('title').notNull(),
     url: text('url').notNull(),
-    img: text('img')
+    img: text('img'),
+    issuedAt: timestamp('issued_at', {withTimezone: true}),
+    category: varchar('category', {enum: ['desenvolvimento de software', 'idiomas', 'variados']})
 })
 
 export const certificateTech = pgTable('certificate_tech', { //Certificate/Tech auxiliary table
     id: text('id').primaryKey().$defaultFn(() => createId()), //PK
-    title: text('text').notNull(),
     techId: text('tech_id').references(() => tech.id),
-    certificateId: text('certificate_id').references(() => certificate.credentials)
+    certificateId: text('certificate_id').references(() => certificate.credentials),
 }) 

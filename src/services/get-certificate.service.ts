@@ -5,20 +5,21 @@ import { certificate, certificateTech, extraInfo, profile, tech } from "../db/sc
 export async function getCertificate(){
     const result = await db
         .select({
+            title: certificate.title,
+            category: certificate.category,
+            issuedAt: certificate.issuedAt,
             url: certificate.url,
             img: certificate.img,
             techs: sql/*sql*/`
                 JSON_AGG(
-                    JSON_BUILD_OBJECT(
-                      'title', ${tech.title}  
-                    )
+                    ${tech.title}
                 )
             `.as('techs')
         }).from(certificate)
         .leftJoin(certificateTech, eq(certificateTech.certificateId, certificate.credentials))
         .leftJoin(tech, eq(tech.id, certificateTech.techId))
         .groupBy(certificate.credentials)
-        .where(eq(certificate.profileId, 'v5f2j45n8s1x64n5p4jv73gp'))
+        .where(eq(certificate.profileId, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
         certificates: result

@@ -11,9 +11,7 @@ export async function getProject(){
             img: project.img,
             techs: sql/*sql*/`
                 JSON_AGG(
-                    JSON_BUILD_OBJECT(
-                      'title', ${tech.title}  
-                    )
+                    ${tech.title}
                 )
             `.as('techs'),
             type: project.type
@@ -21,7 +19,7 @@ export async function getProject(){
         .leftJoin(projectTech, eq(projectTech.projectId, project.id))
         .leftJoin(tech, eq(tech.id, projectTech.techId))
         .groupBy(project.id)
-        .where(eq(project.profileId, 'v5f2j45n8s1x64n5p4jv73gp'))
+        .where(eq(project.profileId, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
         projects: result

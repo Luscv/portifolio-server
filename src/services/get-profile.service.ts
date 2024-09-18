@@ -33,7 +33,7 @@ export async function getProfile(){
         }).from(profile)
         .innerJoin(extraInfo, eq(extraInfo.profileId, profile.id))
         .groupBy(profile.name, profile.role)
-        .where(eq(profile.id, 'v5f2j45n8s1x64n5p4jv73gp'))
+        .where(eq(profile.id, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
         profile: result[0]
