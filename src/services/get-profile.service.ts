@@ -16,23 +16,11 @@ export async function getProfile(){
                     )
                 )
             `.as('extra_info'),
-            // socials: sql /*sql*/`
-            //     JSON_AGG(
-            //         JSON_BUILD_OBJECT(
-            //             'name','LinkedIn',
-            //             'content', ${profile.linkedIn}
-            //         )
-            //     ) 
-            //     JSON_AGG(
-            //         JSON_BUILD_OBJECT(
-            //             'name','GitHub',
-            //             'content', ${profile.github}
-            //         )
-            //     )
-            // `.as('socials') CORRIGIR SOCIALS!!!!!!!
+            linkedin: profile.linkedIn,
+            github: profile.github,
         }).from(profile)
         .innerJoin(extraInfo, eq(extraInfo.profileId, profile.id))
-        .groupBy(profile.name, profile.role)
+        .groupBy(profile.name, profile.role, profile.linkedIn, profile.github)
         .where(eq(profile.id, 'w85fznym5ip4yjptqov2gumt'))
 
     return{
