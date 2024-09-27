@@ -1,8 +1,20 @@
-import { eq, name, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "../db";
-import { certificate, certificateTech, extraInfo, profile, tech } from "../db/schema";
+import { certificate, certificateTech, tech } from "../db/schema";
+import { langRequest } from "../models/lang.interface";
 
-export async function getCertificate(){
+interface CertificateResponse {
+    certificates: {
+        title: string;
+        category: "desenvolvimento de software" | "idiomas" | "variados" | null;
+        issuedAt: Date | null;
+        url: string;
+        img: string | null;
+        techs: unknown;
+    }[]
+}
+
+export async function getCertificate({lang}: langRequest): Promise<CertificateResponse>{
     const result = await db
         .select({
             title: certificate.title,
@@ -19,7 +31,7 @@ export async function getCertificate(){
         .leftJoin(certificateTech, eq(certificateTech.certificateId, certificate.credentials))
         .leftJoin(tech, eq(tech.id, certificateTech.techId))
         .groupBy(certificate.credentials)
-        .where(eq(certificate.profileId, 'w85fznym5ip4yjptqov2gumt'))
+        .where(eq(certificate.profileId, 'edf0znxwmblg5fkvaqlls621'))
 
     return{
         certificates: result

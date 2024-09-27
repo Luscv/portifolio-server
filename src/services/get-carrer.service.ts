@@ -1,12 +1,27 @@
-import { eq, name, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "../db";
-import { carrer, extraInfo, profile } from "../db/schema";
+import { carrer } from "../db/schema";
+import { langRequest } from "../models/lang.interface";
 
-export async function getCarrer(){
+interface CarrerResponse {
+    carrer: {
+        title: string;
+        institution: string;
+        description: string;
+        period: unknown;
+        icon: string;
+        carrerSection: "job" | "education";
+    }[]
+}
+
+export async function getCarrer({lang}: langRequest): Promise<CarrerResponse>{
+    const titleCol = lang === "en-US" ? carrer.titleEn : carrer.title 
+    const descriptionCol= lang === "en-US" ? carrer.descriptionEn : carrer.description
+
     const result = await db
         .select({
-            title: carrer.title,
-            institution: carrer.institution,
+            title: titleCol,
+            institution: descriptionCol,
             description: carrer.description,
             period: sql /*sql */`
                 JSON_BUILD_OBJECT(
@@ -17,7 +32,7 @@ export async function getCarrer(){
             icon: carrer.icon,
             carrerSection: carrer.carrerSection
         }).from(carrer)
-        .where(eq(carrer.profileId, 'w85fznym5ip4yjptqov2gumt'))
+        .where(eq(carrer.profileId, 'edf0znxwmblg5fkvaqlls621'))
 
     return{
         carrer: result

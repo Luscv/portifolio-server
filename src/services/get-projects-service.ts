@@ -1,8 +1,20 @@
-import { eq, name, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { db } from "../db";
-import { extraInfo, profile, project, projectTech, tech } from "../db/schema";
+import { project, projectTech, tech } from "../db/schema";
+import { langRequest } from "../models/lang.interface";
 
-export async function getProject(){
+interface ProjectsResponse {
+    projects: {
+        description: string;
+        repoUrl: string;
+        url: string;
+        img: string | null;
+        techs: unknown;
+        type: "front-end" | "back-end" | "mobile" | "extras";
+    }[]
+}
+
+export async function getProject({lang}: langRequest): Promise<ProjectsResponse>{
     const result = await db
         .select({
             description: project.description,
@@ -19,7 +31,7 @@ export async function getProject(){
         .leftJoin(projectTech, eq(projectTech.projectId, project.id))
         .leftJoin(tech, eq(tech.id, projectTech.techId))
         .groupBy(project.id)
-        .where(eq(project.profileId, 'w85fznym5ip4yjptqov2gumt'))
+        .where(eq(project.profileId, 'edf0znxwmblg5fkvaqlls621'))
 
     return{
         projects: result
