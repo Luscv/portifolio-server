@@ -4,6 +4,7 @@ import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
 export const profile = pgTable('profile', {
     id: text('id').primaryKey().$defaultFn(() => createId()), //PK
     name: text('name').notNull(),
+    avatarUrl: text('avatar_url'),
     role: text('role').notNull(),
     roleEn: text('role_en').notNull(),
     bio: text('bio').notNull(),
