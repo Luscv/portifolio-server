@@ -22,6 +22,7 @@ export async function getProfile({lang}: langRequest): Promise<profileReponse>{
         .select({
             name: profile.name,
             role: roleCol,
+            avatarUrl: profile.avatarUrl,
             extraInfo: sql/*sql*/ `
                 JSON_AGG(
                     JSON_BUILD_OBJECT(
