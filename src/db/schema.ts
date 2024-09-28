@@ -45,7 +45,7 @@ export const tech = pgTable('tech', {
     titleEn: text('title_en').notNull(),
     description: text('description').notNull(),
     descriptionEn: text('description_en').notNull(),
-    icon: varchar('icon', {length: 15}).notNull()
+    icon: varchar('icon', {length: 25}).notNull()
 })
 
 //N-M relations (TEST)
