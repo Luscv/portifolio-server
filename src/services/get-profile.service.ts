@@ -36,7 +36,7 @@ export async function getProfile({lang}: langRequest): Promise<profileReponse>{
             github: profile.github,
         }).from(profile)
         .innerJoin(extraInfo, eq(extraInfo.profileId, profile.id))
-        .groupBy(profile.name, profile.role, profile.roleEn, profile.linkedIn, profile.github)
+        .groupBy(profile.name, profile.role, profile.roleEn, profile.linkedIn, profile.github, profile.avatarUrl)
         .where(eq(profile.id, 'edf0znxwmblg5fkvaqlls621'))
 
     return{
