@@ -21,8 +21,8 @@ export async function getCarrer({lang}: langRequest): Promise<CarrerResponse>{
     const result = await db
         .select({
             title: titleCol,
-            institution: descriptionCol,
-            description: carrer.description,
+            institution: carrer.institution,
+            description: descriptionCol,
             period: sql /*sql */`
                 JSON_BUILD_OBJECT(
                     'startDate', ${carrer.startDate},
