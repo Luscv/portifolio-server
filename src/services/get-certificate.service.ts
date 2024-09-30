@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { db } from "../db";
 import { certificate, certificateTech, tech } from "../db/schema";
 import { langRequest } from "../models/lang.interface";
@@ -33,6 +33,7 @@ export async function getCertificate({lang}: langRequest): Promise<CertificateRe
         .leftJoin(tech, eq(tech.id, certificateTech.techId))
         .groupBy(certificate.credentials)
         .where(eq(certificate.profileId, 'edf0znxwmblg5fkvaqlls621'))
+        .orderBy(desc(certificate.issuedAt))
 
         const formattedResult = result.map(item => {
             const issuedAtFormatted = dayjs(item.issuedAt).format("MM/YYYY");
