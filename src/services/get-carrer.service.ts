@@ -1,4 +1,4 @@
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, asc } from "drizzle-orm";
 import { db } from "../db";
 import { carrer } from "../db/schema";
 import { langRequest } from "../models/lang.interface";
@@ -35,7 +35,7 @@ export async function getCarrer({lang}: langRequest): Promise<CarrerResponse>{
             carrerSection: carrer.carrerSection
         }).from(carrer)
         .where(eq(carrer.profileId, 'edf0znxwmblg5fkvaqlls621'))
-        .orderBy(desc(carrer.startDate))
+        .orderBy(asc(carrer.startDate))
 
         const formattedResult = result.map(item => {
             const startDateFormatted = dayjs(item.startDate).locale(locale).format("MMM/YYYY"); 
